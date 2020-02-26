@@ -36,8 +36,8 @@ ApplicationWindow {
                 x: 0
                 y: 10
 
-                leftPadding: 30
-                topPadding: 5
+                leftPadding: 35
+                topPadding: 10
                 width: parent.width * 0.5
                 font.family: "Arial"
                 //                padding: 6
