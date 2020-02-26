@@ -86,7 +86,7 @@ static const uint qt_meta_data_QmlBridge9911b0[] = {
 
  // slots: parameters
     QMetaType::QStringList, QMetaType::QString,    5,
-    QMetaType::QString, QMetaType::QString,   14,
+    QMetaType::QStringList, QMetaType::QString,   14,
 
  // properties: name, type, flags
        9, QMetaType::QStringList, 0x00495103,
@@ -111,8 +111,8 @@ void QmlBridge9911b0::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 3: _t->wordChanged((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 4: { QStringList _r = _t->sendToGo((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = std::move(_r); }  break;
-        case 5: { QString _r = _t->find((*reinterpret_cast< QString(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
+        case 5: { QStringList _r = _t->find((*reinterpret_cast< QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< QStringList*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

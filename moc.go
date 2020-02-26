@@ -194,19 +194,19 @@ func (ptr *QmlBridge) SendToGo(data string) []string {
 //export callbackQmlBridge9911b0_Find
 func callbackQmlBridge9911b0_Find(ptr unsafe.Pointer, id C.struct_Moc_PackedString) C.struct_Moc_PackedString {
 	if signal := qt.GetSignal(ptr, "find"); signal != nil {
-		tempVal := (*(*func(string) string)(signal))(cGoUnpackString(id))
-		return C.struct_Moc_PackedString{data: C.CString(tempVal), len: C.longlong(len(tempVal))}
+		tempVal := (*(*func(string) []string)(signal))(cGoUnpackString(id))
+		return C.struct_Moc_PackedString{data: C.CString(strings.Join(tempVal, "¡¦!")), len: C.longlong(len(strings.Join(tempVal, "¡¦!")))}
 	}
-	tempVal := ""
-	return C.struct_Moc_PackedString{data: C.CString(tempVal), len: C.longlong(len(tempVal))}
+	tempVal := make([]string, 0)
+	return C.struct_Moc_PackedString{data: C.CString(strings.Join(tempVal, "¡¦!")), len: C.longlong(len(strings.Join(tempVal, "¡¦!")))}
 }
 
-func (ptr *QmlBridge) ConnectFind(f func(id string) string) {
+func (ptr *QmlBridge) ConnectFind(f func(id string) []string) {
 	if ptr.Pointer() != nil {
 
 		if signal := qt.LendSignal(ptr.Pointer(), "find"); signal != nil {
-			f := func(id string) string {
-				(*(*func(string) string)(signal))(id)
+			f := func(id string) []string {
+				(*(*func(string) []string)(signal))(id)
 				return f(id)
 			}
 			qt.ConnectSignal(ptr.Pointer(), "find", unsafe.Pointer(&f))
@@ -223,16 +223,16 @@ func (ptr *QmlBridge) DisconnectFind() {
 	}
 }
 
-func (ptr *QmlBridge) Find(id string) string {
+func (ptr *QmlBridge) Find(id string) []string {
 	if ptr.Pointer() != nil {
 		var idC *C.char
 		if id != "" {
 			idC = C.CString(id)
 			defer C.free(unsafe.Pointer(idC))
 		}
-		return cGoUnpackString(C.QmlBridge9911b0_Find(ptr.Pointer(), C.struct_Moc_PackedString{data: idC, len: C.longlong(len(id))}))
+		return unpackStringList(cGoUnpackString(C.QmlBridge9911b0_Find(ptr.Pointer(), C.struct_Moc_PackedString{data: idC, len: C.longlong(len(id))})))
 	}
-	return ""
+	return make([]string, 0)
 }
 
 //export callbackQmlBridge9911b0_Add

@@ -42,7 +42,7 @@ func main() {
 
 	for scanner.Scan() {
 
-		splitted := strings.Split(scanner.Text()[1:], "|")
+		splitted := strings.Split(scanner.Text(), "|")
 		count++
 
 		// if count == 5000 {
@@ -77,7 +77,7 @@ type QmlBridge struct {
 	_  string                            `property:"word"`
 	_  func(source, action, data string) `signal:"sendToQml"`
 	_  func(data string) []string        `slot:"sendToGo"`
-	_  func(id string) string            `slot:"find"`
+	_  func(id string) []string          `slot:"find"`
 
 	_ func(obj []*core.QVariant) `signal:"add,auto"`
 }
@@ -97,16 +97,8 @@ func initQmlBridge() *QmlBridge {
 	qmlBridge = NewQmlBridge(nil)
 
 	qmlBridge.ConnectSendToGo(func(data string) []string {
-		fmt.Println("data ", data)
-		// qmlBridge.Title.Value = data
 
 		wordList := t.GetSuggestion(data, 10)
-		fmt.Println("Debug wordList", wordList)
-
-		// for _, v := range wordList {
-		// 	qmlBridge.Wr = append(qmlBridge.Wr, v)
-		// }
-		// fmt.Println("resultArr, data ", wordList, data)
 
 		qmlBridge.Wr = wordList
 		qmlBridge.SetWrds(wordList)
@@ -118,14 +110,16 @@ func initQmlBridge() *QmlBridge {
 	qmlBridge.ConnectRowCount(qmlBridge.rowCount)
 	qmlBridge.ConnectData(qmlBridge.data)
 
-	qmlBridge.ConnectFind(func(data string) string {
+	qmlBridge.ConnectFind(func(data string) []string {
 
 		word, ok := t.Search(data)
 
+		wordList := strings.Split(word, ",")
+
 		if !ok {
-			return "Word not found"
+			return wordList
 		}
-		return word
+		return wordList
 
 	})
 

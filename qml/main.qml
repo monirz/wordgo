@@ -8,13 +8,14 @@ ApplicationWindow {
     color: "#EFEBE7"
     id: root
 
-    property variant items: ["four", "five", "foo", "bar", "baz"]
+     property variant items: ["four", "five", "foo", "bar", "baz"]
     property variant items2: []
+    property variant resultItems: ["earth", "mars", "saturn"]
     property bool ok: false
 
-    Connections {
-        target: qmlBridge
-    }
+   Connections {
+       target: qmlBridge
+   }
 
     Column{
 
@@ -36,9 +37,12 @@ ApplicationWindow {
                 id: textField
                 x: 0
                 y: 10
-                leftPadding: parent.width * 0.03
+
+                leftPadding: 30
+                topPadding: 5
                 width: parent.width * 0.5
-                padding: 6
+                font.family: "Arial"
+                //                padding: 6
                 renderType: Text.QtRendering
                 horizontalAlignment: Text.AlignLeft
                 focus: true
@@ -49,14 +53,12 @@ ApplicationWindow {
 
                 Image {
                     id: searchIcon
-                    anchors { top: parent.top; left: parent.left; margins: 1 }
+                    anchors {left: parent.left; margins: 1 }
                     smooth: true
                     fillMode: Image.PreserveAspectFit
                     source: "search.png"
-                    height: parent.height
-                    anchors.leftMargin: 0
-                    anchors.topMargin: 0
-                    width: parent.height
+                    height: parent.height - 2
+                     width: parent.height - 2
 
                 }
 
@@ -68,18 +70,9 @@ ApplicationWindow {
                 }
 
                 onTextChanged: {
-                    console.log("text changed")
-                    // console.log(text)
-
-                    // items = qmlBridge.wrds
+                    // console.log("text changed")
                     listView.model = qmlBridge.sendToGo(text)
-
-                    // console.log(qmlBridge.wrds)
-                    // console.log(items)
-
                     popup.open()
-
-
                 }
 
                 Keys.forwardTo: [listView.currentItem, listView]
@@ -107,27 +100,19 @@ ApplicationWindow {
                         delegate: ItemDelegate {
                             id: control
                             text: modelData
+                            font.family: "Arial"
                             width: parent.width
                             highlighted: index === listView.currentIndex
 
                             background: Rectangle {
                                 color: control.highlighted ? "#FA774E" : "#eeeeee"
-
-//                                Rectangle {
-//                                    width: parent.width
-//                                    height: 1
-//                                    color: control.down ? "#494949" : "#494949"
-//                                    anchors.bottom: parent.bottom
-//                                    radius: 4
-//                                }
                             }
                         }
 
                         Keys.onReturnPressed: {
                             textField.text = listView.model[listView.currentIndex]
-
-                            console.log(listView.currentIndex)
-                            resultRec.text = qmlBridge.find(listView.model[listView.currentIndex])
+                            rezsultList.model = qmlBridge.find(listView.model[listView.currentIndex])
+                            wordArea.text =  listView.model[listView.currentIndex]
                             popup.close()
                         }
 
@@ -150,6 +135,7 @@ ApplicationWindow {
                 height: parent.height
                 Text {
                     id: wordArea
+                    font.family: "Arial"
                     x: 10
                     y: 5
                     text: ""
@@ -161,26 +147,37 @@ ApplicationWindow {
                 id: wordMeaning
                 color: "#FEFDEB"
                 border.width: 1
+                ListView{
+                    id: rezsultList
+                    width: 180; height: 200
+
+
+                    topMargin: 10
+                    leftMargin: 10
+                    model: []
+                    delegate: Text {
+                        text: modelData
+
+                        bottomPadding: 20
+                    }
+                }
 
                 border.color: "#B7B4B1"
                 width: root.width * 0.6
                 height: parent.height
 
-                TextInput{
-                    readOnly: true
+                Text{
                     id: resultRec
+                    font.family: "Arial"
+                    leftPadding: 10
+                    topPadding: 5
                 }
 
                 MouseArea {
                     anchors.fill: parent
                     propagateComposedEvents: true
                     onPressed: {
-
-                        // textfield should be activated for editing...
-                        console.log("clicked")
-                        wordMeaning.focus = true
-                        console.log( textField.enabled)
-                    }
+                        wordMeaning.focus = true                    }
                 }
             }
         }

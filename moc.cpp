@@ -66,7 +66,7 @@ signals:
 	void wordChanged(QString word);
 public slots:
 	QStringList sendToGo(QString data) { QByteArray* ta17c9a = new QByteArray(data.toUtf8()); Moc_PackedString dataPacked = { const_cast<char*>(ta17c9a->prepend("WHITESPACE").constData()+10), ta17c9a->size()-10, ta17c9a };return ({ Moc_PackedString tempVal = callbackQmlBridge9911b0_SendToGo(this, dataPacked); QStringList ret = QString::fromUtf8(tempVal.data, tempVal.len).split("¡¦!", QString::SkipEmptyParts); free(tempVal.data); ret; }); };
-	QString find(QString id) { QByteArray* t87ea5d = new QByteArray(id.toUtf8()); Moc_PackedString idPacked = { const_cast<char*>(t87ea5d->prepend("WHITESPACE").constData()+10), t87ea5d->size()-10, t87ea5d };return ({ Moc_PackedString tempVal = callbackQmlBridge9911b0_Find(this, idPacked); QString ret = QString::fromUtf8(tempVal.data, tempVal.len); free(tempVal.data); ret; }); };
+	QStringList find(QString id) { QByteArray* t87ea5d = new QByteArray(id.toUtf8()); Moc_PackedString idPacked = { const_cast<char*>(t87ea5d->prepend("WHITESPACE").constData()+10), t87ea5d->size()-10, t87ea5d };return ({ Moc_PackedString tempVal = callbackQmlBridge9911b0_Find(this, idPacked); QStringList ret = QString::fromUtf8(tempVal.data, tempVal.len).split("¡¦!", QString::SkipEmptyParts); free(tempVal.data); ret; }); };
 private:
 	QStringList _wrds;
 	QString _word;
@@ -104,9 +104,9 @@ struct Moc_PackedString QmlBridge9911b0_SendToGo(void* ptr, struct Moc_PackedStr
 
 struct Moc_PackedString QmlBridge9911b0_Find(void* ptr, struct Moc_PackedString id)
 {
-	QString returnArg;
-	QMetaObject::invokeMethod(static_cast<QmlBridge9911b0*>(ptr), "find", Q_RETURN_ARG(QString, returnArg), Q_ARG(QString, QString::fromUtf8(id.data, id.len)));
-	return ({ QByteArray* t8e5b69 = new QByteArray(returnArg.toUtf8()); Moc_PackedString { const_cast<char*>(t8e5b69->prepend("WHITESPACE").constData()+10), t8e5b69->size()-10, t8e5b69 }; });
+	QStringList returnArg;
+	QMetaObject::invokeMethod(static_cast<QmlBridge9911b0*>(ptr), "find", Q_RETURN_ARG(QStringList, returnArg), Q_ARG(QString, QString::fromUtf8(id.data, id.len)));
+	return ({ QByteArray* t8e5b69 = new QByteArray(returnArg.join("¡¦!").toUtf8()); Moc_PackedString { const_cast<char*>(t8e5b69->prepend("WHITESPACE").constData()+10), t8e5b69->size()-10, t8e5b69 }; });
 }
 
 void QmlBridge9911b0_ConnectAdd(void* ptr, long long t)
