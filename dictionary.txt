@@ -13503,4 +13503,4 @@ lima|লিমা
 richardson|রিচার্ডসন
 expands|সম্প্রসারিত হয়
 fast.bowler|ফাস্ট বোলার,ফাস্ট বোলার
-jawbone|চোয়াল
+jawbone|চ

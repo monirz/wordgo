@@ -8,6 +8,9 @@
 moc_cgo_linux_linux_amd64.go 
 rcc_cgo_linux_linux_amd64.go 
 moc.go 
+moc_cgo_windows_windows_amd64.go
+rcc_cgo_windows_windows_amd64.go
+
 
 # Test binary, built with `go test -c`
 *.test
