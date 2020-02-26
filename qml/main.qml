@@ -8,9 +8,7 @@ ApplicationWindow {
     color: "#EFEBE7"
     id: root
 
-     property variant items: ["four", "five", "foo", "bar", "baz"]
     property variant items2: []
-    property variant resultItems: ["earth", "mars", "saturn"]
     property bool ok: false
 
    Connections {
