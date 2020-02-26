@@ -2,6 +2,12 @@
 *.dll
 *.so
 *.dylib
+*.h
+*.qrc
+*.cpp 
+moc_cgo_linux_linux_amd64.go 
+rcc_cgo_linux_linux_amd64.go 
+moc.go 
 
 # Test binary, built with `go test -c`
 *.test
@@ -10,4 +16,4 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
