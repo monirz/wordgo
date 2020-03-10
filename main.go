@@ -2,11 +2,11 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
+	"runtime"
 	"strings"
-
-	"os"
 
 	"github.com/monirz/gotri"
 	"github.com/therecipe/qt/core"
@@ -14,6 +14,7 @@ import (
 	"github.com/therecipe/qt/qml"
 	"github.com/therecipe/qt/quickcontrols2"
 	"github.com/therecipe/qt/widgets"
+	"os"
 )
 
 var (
@@ -27,10 +28,39 @@ var t *gotri.Trie
 
 func main() {
 
-	f, err := os.Open("dictionary.txt")
+	var (
+		f   *os.File
+		err error
+	)
 
-	if err != nil {
-		log.Fatal(err)
+	if runtime.GOOS == "linux" || runtime.GOOS == "darwin" {
+
+		filePath := "/usr/share/dictionary.txt"
+
+		_, err := os.Stat(filePath)
+
+		if err != nil {
+			err = errors.New("Error lookign file path")
+			log.Fatal(err)
+		}
+
+		if os.IsNotExist(err) {
+			filePath = "dictionary.txt"
+		}
+
+		f, err = os.Open(filePath)
+		if err != nil {
+			err = errors.New("dictionary.txt file is not found in /usr/share or in the current directory")
+			log.Fatal(err)
+		}
+
+	} else {
+		f, err = os.Open("dictionary.txt")
+		if err != nil {
+			err = errors.New("dictionary.txt file is not found in the current directory")
+			log.Fatal(err)
+		}
+
 	}
 
 	defer f.Close()
@@ -86,10 +116,10 @@ func (wm *QmlBridge) find(key string) string {
 
 	if len(qmlBridge.Wr) > 0 {
 		return qmlBridge.Wr[0]
-	} else {
-
-		return "No value"
 	}
+
+	return "No value"
+
 }
 
 func initQmlBridge() *QmlBridge {
