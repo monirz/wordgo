@@ -8,13 +8,14 @@ import (
 	"runtime"
 	"strings"
 
+	"os"
+
 	"github.com/monirz/gotri"
 	"github.com/therecipe/qt/core"
 	"github.com/therecipe/qt/gui"
 	"github.com/therecipe/qt/qml"
 	"github.com/therecipe/qt/quickcontrols2"
 	"github.com/therecipe/qt/widgets"
-	"os"
 )
 
 var (
@@ -35,14 +36,9 @@ func main() {
 
 	if runtime.GOOS == "linux" || runtime.GOOS == "darwin" {
 
-		filePath := "/usr/share/dictionary.txt"
+		filePath := "/usr/share/wordgo/dictionary.txt"
 
 		_, err := os.Stat(filePath)
-
-		if err != nil {
-			err = errors.New("Error lookign file path")
-			log.Fatal(err)
-		}
 
 		if os.IsNotExist(err) {
 			filePath = "dictionary.txt"
