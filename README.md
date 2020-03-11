@@ -9,18 +9,25 @@ For using it with different language you will need to replace the dictionary.txt
 
 This dictionary file has 135000 English word with multiple Bangla word menaing. Feel free to add any correction or add a new word to it. Also if you are good at QML and think you can improve the UI, don't hesitate, just jump into it. 
 
-### Usage 
-To use it just download the `wordgo` binary and the dictionary.txt from the deploy directory for your specific platform and run it.  
+### Usage/Install  
+
+Check out the binary file in the release section and download the file for your specific platform.   
+For **Debian** based distro there is a debian package file in the release, just download [this](https://github.com/monirz/wordgo/releases/download/1.0.1/wordgo_1.0-1.deb) and run the command
+
+```
+$ sudo dpkg -i wordgo_1.0-1.deb
+$ wordgo
+```
+
+The latest binary file might be found in the **deploy** directory with the platform name.   
 Run it from the root directory of the project.
 
 ```
 $ ./deploy/linux/wordgo 
 ``` 
 
-** Note: ** 
-Currently you will need to have the dictionary.txt file in the same directory where you run the `wordgo` binary. So for the above cpommand you'll need to have the dictionary file in the root directory.    
-
-
+**Note:** 
+If you run the `wordgo` executable file directly, you will need to have the dictionary.txt file in the same directory.   
 
 ## Build 
 To install the dependency follow the [therecipe/qt](https://github.com/therecipe/qt) instruction for compiling QT application.  
@@ -48,9 +55,6 @@ $ make linux-to-windows
 ## Credit 
 
 The word-list is generated based on Ankur.org's Bangla-English [dictionary database](http://www.bengalinux.org/english-to-bengali-dictionary/about.htm.    
-
-
-
 
 
 
